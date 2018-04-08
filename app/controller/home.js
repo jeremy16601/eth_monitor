@@ -48,7 +48,14 @@ class HomeController extends Controller {
     //   }
     // }
     //  ;
-    
+    let str1 = '';
+    console.log(table3[0].length)
+    for (let i = 1; i < table3[0].length; i++) {
+      str1 = str1 + '  ' + table3[0][i];
+    }
+    ctx.body = {
+      str: str1
+    }
     let params = {}
     params.eth_id;
     params.TxHash;
@@ -59,12 +66,12 @@ class HomeController extends Controller {
     params.To;
     params.Value;
     params.TxFee;
-    const eth = await service.home.saveAccount(ctx.query.eth_address, eth_balance, token_balance, transactions)
-    ctx.body = {
-      table: table1,
-      table2: table2,
-      table3: table3
-    };
+    // const eth = await service.home.saveAccount(ctx.query.eth_address, eth_balance, token_balance, transactions)
+    // ctx.body = {
+    //   table: table1,
+    //   table2: table2,
+    //   table3: table3
+    // };
 
   }
 
