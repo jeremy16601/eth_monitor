@@ -36,42 +36,42 @@ class HomeController extends Controller {
     }
     //查询是否存在
     const account = await service.home.findByEth(ctx.query.eth_address);
-    // if (account==null) {
-    //   const eth = await service.home.saveAccount(ctx.query.eth_address, eth_balance, token_balance, transactions)
-    //   ctx.body = {
-    //     data: eth
-    //   }
-    // } else {
-    //   const eth = await service.home.updateAccount(account._id, eth_balance, token_balance, transactions)
-    //   ctx.body = {
-    //     eth: eth
-    //   }
-    // }
-    //  ;
-    let str1 = '';
-    console.log(table3[0].length)
+    if (account == null) {
+      const eth = await service.home.saveAccount(ctx.query.eth_address, eth_balance, token_balance, transactions)
+      ctx.body = {
+        data: eth
+      }
+    } else {
+      const eth = await service.home.updateAccount(account._id, eth_balance, token_balance, transactions)
+      ctx.body = {
+        eth: eth
+      }
+    };
+
+    let rs;
     for (let i = 1; i < table3[0].length; i++) {
-      str1 = str1 + '  ' + table3[0][i];
+      let params = {};
+      params.eth_id = account._id;
+      params.TxHash = table3[0][i];
+      params.Block = table3[1][i];
+      params.Age = table3[2][i];
+      params.From = table3[3][i];
+      params.IN_Out = table3[4][i];
+      params.To = table3[5][i];
+      params.Value = table3[6][i];
+      params.TxFee = table3[7][i];
+      let isTx = await service.home.findByTxHash(params.TxHash);
+      if (isTx == null) {
+        rs = await service.home.saveEtherscans(params);
+      }
+
     }
     ctx.body = {
-      str: str1
+      str: rs,
+      id: account._id
     }
-    let params = {}
-    params.eth_id;
-    params.TxHash;
-    params.Block;
-    params.Age;
-    params.From;
-    params.IN_Out;
-    params.To;
-    params.Value;
-    params.TxFee;
-    // const eth = await service.home.saveAccount(ctx.query.eth_address, eth_balance, token_balance, transactions)
-    // ctx.body = {
-    //   table: table1,
-    //   table2: table2,
-    //   table3: table3
-    // };
+
+
 
   }
 

@@ -43,5 +43,11 @@ class HomeService extends Service {
         return this.ctx.model.Account.findOne(query, '_id', opts).exec();
     }
 
+        //查询是否有交易id
+        async findByTxHash(TxHash){
+            const query = { TxHash: TxHash };
+            const opts = { sort: { create_at: -1 }, limit: 1 };
+            return this.ctx.model.Etherscan.findOne(query, '_id', opts).exec();
+        }
 }
 module.exports = HomeService;
