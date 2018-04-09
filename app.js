@@ -1,5 +1,5 @@
-module.exports = app => {
-    app.beforeStart(async () => { 
-      await app.runSchedule('update_ethaddress');
-    });
-  };
+// module.exports = app => {
+//     app.beforeStart(async () => { 
+//       // await app.runSchedule('update_ethaddress');
+//     });
+//   };

@@ -3,16 +3,25 @@
 const Controller = require('egg').Controller;
 const cheerio = require('cheerio');
 const cheerioTableparser = require('cheerio-tableparser');
+const EventEmitter = require('events').EventEmitter; 
+
 class HomeController extends Controller {
   async index() {
     const {
       ctx,
       service
     } = this;
+
+    const event = new EventEmitter(); 
+    event.on('some_event', async() =>{ 
+      while(true){
+        console.log('some_event 事件触发'); 
+    
     // var api = require('etherscan-api').init('8TYUJBYPS9NH3QDEBQDVICXJ7F8EQ1T434','rinkeby');
     // let balance =await api.account.balance('0xd0a6E6C54DbC68Db5db3A091B171A77407Ff7ccf');
     // ctx.body={data:balance}
-    const result = await ctx.curl('https://etherscan.io/address/' + ctx.query.eth_address, {
+    const eth='0xd0a6E6C54DbC68Db5db3A091B171A77407Ff7ccf';
+    const result = await ctx.curl('https://etherscan.io/address/' + eth, {
       // 3 秒超时
       dataType: 'text',
       timeout: 5000,
@@ -35,17 +44,13 @@ class HomeController extends Controller {
       token_balance = table2[1][3].slice(table2[1][3].lastIndexOf('Total'));
     }
     //查询是否存在
-    const account = await service.home.findByEth(ctx.query.eth_address);
+    const account = await service.home.findByEth(eth);
     if (account == null) {
-      const eth = await service.home.saveAccount(ctx.query.eth_address, eth_balance, token_balance, transactions)
-      ctx.body = {
-        data: eth
-      }
+      const eth1 = await service.home.saveAccount(eth, eth_balance, token_balance, transactions)
+      console.log('save eth='+JSON.stringify(eth1))
     } else {
-      const eth = await service.home.updateAccount(account._id, eth_balance, token_balance, transactions)
-      ctx.body = {
-        eth: eth
-      }
+      const eth2 = await service.home.updateAccount(account._id, eth_balance, token_balance, transactions)
+      console.log('update eth='+JSON.stringify(eth2))
     };
 
     let rs;
@@ -63,16 +68,20 @@ class HomeController extends Controller {
       let isTx = await service.home.findByTxHash(params.TxHash);
       if (isTx == null) {
         rs = await service.home.saveEtherscans(params);
+        console.log('save etherscan:'+params.From)
       }
 
     }
-    ctx.body = {
-      str: rs,
-      id: account._id
-    }
+    // ctx.body = {
+    //   str: rs,
+    //   id: account._id
+    // }
+  }
+  }); 
 
-
-
+  setTimeout(function() { 
+    event.emit('some_event'); 
+}, 1000); 
   }
 
 }

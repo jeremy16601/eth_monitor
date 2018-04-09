@@ -9,7 +9,8 @@
     "egg": "^2.2.1",
     "egg-mongoose": "^2.2.0",
     "egg-scripts": "^2.5.0",
-    "etherscan-api": "^8.0.4"
+    "etherscan-api": "^8.0.4",
+    "events": "^2.0.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",

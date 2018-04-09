@@ -6,7 +6,7 @@ class UpdateEtherscan extends Subscription {
   // 通过 schedule 属性来设置定时任务的执行间隔等配置
   static get schedule() {
     return {
-      interval: '10s', // 1 分钟间隔
+      interval: '10m', // 1 分钟间隔
       type: 'all', // 指定所有的 worker 都需要执行
     };
   }
@@ -44,11 +44,11 @@ class UpdateEtherscan extends Subscription {
       //查询是否存在
       const account = await service.home.findByEth(eth);
       if (account == null) {
-        const eth = await service.home.saveAccount(eth, eth_balance, token_balance, transactions)
-        console.log('save eth='+eth)
+        const eth1 = await service.home.saveAccount(eth, eth_balance, token_balance, transactions)
+        console.log('save eth='+eth1)
       } else {
-        const eth = await service.home.updateAccount(account._id, eth_balance, token_balance, transactions)
-        console.log('update eth='+eth)
+        const eth2 = await service.home.updateAccount(account._id, eth_balance, token_balance, transactions)
+        console.log('update eth='+eth2)
       };
   
       let rs;
