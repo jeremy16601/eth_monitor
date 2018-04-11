@@ -6,7 +6,6 @@ module.exports = app => {
   const ObjectId = Schema.ObjectId;
 
   const exchangeSchema = new Schema({
-    ex_name:{type:String},
     title: { type: String },
     content: { type: String },
     count:{type:Number},

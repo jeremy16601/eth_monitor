@@ -5,7 +5,7 @@ class ExchangeCache extends Subscription {
   // 通过 schedule 属性来设置定时任务的执行间隔等配置
   static get schedule() {
     return {
-      interval: '3s', // 1 分钟间隔
+      interval: '10s', // 1 分钟间隔
       type: 'all', // 指定所有的 worker 都需要执行
     };
   }
@@ -22,13 +22,34 @@ class ExchangeCache extends Subscription {
       timeout: 5000,
     });
     const $ = cheerio.load(result.data);
-    const tx =[];
-    $('.notice-list').each(function(i, elem) {
+    const tx = [];
+    const title = [];
+    const content = [];
+    console.log('开启监控..公告')
+    $('.chain-content').find('b').each(function (i, elem) {
       tx[i] = $(this).text();
-      console.log('tx=====' + tx[i].charCodeAt(']'))
+      if (i % 2 == 0) {
+        title.push(tx[i]);
+      } else {
+        content.push(tx[i]);
+      }
     });
-   
-    
+
+
+    for (var i = 0; i < title.length; i++) {
+      let params = {};
+      params.title = title[i];
+      params.content = content[i];
+      let isEx = await service.exchange.findByTitile(params.title);
+      if (isEx == null) {
+        let ex = await service.exchange.saveExchange(params);
+        console.log('save exchange:' + ex)
+      }
+
+
+    }
+
+
   }
 }
 
