@@ -13,9 +13,9 @@ class ExchangeService extends Service {
     }
 
     //查询是否有该公告
-    async findByTitile(title) {
+    async findByContent(content) {
         const query = {
-            title: title
+            content: content
         };
         const opts = {
             sort: {

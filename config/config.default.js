@@ -25,5 +25,19 @@ module.exports = appInfo => {
       },
     },
   };
+
+  config.cors = {
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    credentials: true
+  }
+
+  config.security = {
+    ctoken: false,
+    csrf: {
+      enable: false
+    },
+    domainWhiteList: ['localhost:8080', 'http://192.168.1.125:8080', 'http://www.ethgamestop.com']
+  }
+
   return config;
 };

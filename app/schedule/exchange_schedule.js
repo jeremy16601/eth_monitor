@@ -40,10 +40,12 @@ class ExchangeCache extends Subscription {
       let params = {};
       params.title = title[i];
       params.content = content[i];
-      let isEx = await service.exchange.findByTitile(params.title);
+      let isEx = await service.exchange.findByContent(params.content);
       if (isEx == null) {
         let ex = await service.exchange.saveExchange(params);
         console.log('save exchange:' + ex)
+      }else{
+        console.log('not save exchange:' + isEx)
       }
 
 
