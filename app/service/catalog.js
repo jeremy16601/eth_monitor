@@ -11,6 +11,11 @@ class CatalogService extends Service {
         data.price = c.price;
         return data.save();
     }
+
+
+    async list(){
+        return this.ctx.model.Catalog.find().sort({"create_at":-1});
+    }
  
 }
 
