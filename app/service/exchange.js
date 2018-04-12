@@ -25,6 +25,10 @@ class ExchangeService extends Service {
         };
         return this.ctx.model.Exchange.findOne(query, '_id', opts).exec();
     }
+
+    async list(){
+        return this.ctx.model.Exchange.find().sort({"create_at":-1});
+    }
 }
 
 module.exports = ExchangeService;
