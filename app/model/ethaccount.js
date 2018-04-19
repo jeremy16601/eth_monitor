@@ -5,7 +5,7 @@ module.exports = app => {
   const Schema = mongoose.Schema;
   const ObjectId = Schema.ObjectId;
 
-  const accountSchema = new Schema({
+  const ethaccountSchema = new Schema({
     eth:{type:String},
     eth_balance: { type: String },
     token_balance: { type: String },
@@ -16,5 +16,5 @@ module.exports = app => {
 
 
 
-  return mongoose.model('account', accountSchema);
+  return mongoose.model('eth_account', ethaccountSchema);
 };

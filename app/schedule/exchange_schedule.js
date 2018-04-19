@@ -45,7 +45,7 @@ class ExchangeCache extends Subscription {
         let ex = await service.exchange.saveExchange(params);
         console.log('save exchange:' + ex)
       }else{
-        console.log('not save exchange:' + isEx)
+        // console.log('not save exchange:' + isEx)
       }
 
 
